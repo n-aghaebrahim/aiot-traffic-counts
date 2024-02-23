@@ -51,6 +51,7 @@ To run the training process, execute the following command:
 
 ```bash
 python main.py --datafile /path/to/your/data.csv
+```
 
 ## Output Charts
 
