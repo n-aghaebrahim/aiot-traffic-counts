@@ -1,16 +1,17 @@
 import os
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import MinMaxScaler
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv1D, MaxPooling1D, LSTM, Dense
-from tensorflow.keras.optimizers import Adam
 import matplotlib.pyplot as plt
 
 
+
+
 def plot_training_history(history, results_dir):
+    """
+    Plots the training and validation loss over epochs and saves the plot to a file.
+
+    Parameters:
+    - history: History object returned by the fit method of a keras Model.
+    - results_dir: String, directory path to save the plot image.
+    """
     plt.figure(figsize=(12, 5))
     plt.subplot(1, 2, 1)
     plt.plot(history.history['loss'], label='Training loss')
@@ -19,14 +20,21 @@ def plot_training_history(history, results_dir):
     plt.ylabel('Loss')
     plt.xlabel('Epoch')
     plt.legend()
-    #plt.show()
 
     # Save the plot to a file
     plt.savefig(os.path.join(results_dir, 'training_and_validation_loss.png'))
-    plt.close()  # Close the plot to free up memory
+    plt.close()
 
 
 def plot_predict(y_test, y_pred, results_dir):
+    """
+    Plots the first N actual vs predicted values and saves the plot to a file.
+
+    Parameters:
+    - y_test: Array, actual target values.
+    - y_pred: Array, predicted target values.
+    - results_dir: String, directory path to save the plot image.
+    """
     N = 100  # Number of samples to plot
     plt.figure(figsize=(10, 6))
     plt.plot(y_test[:N], label='Actual', marker='.', linestyle='-', linewidth=1.5)
@@ -35,15 +43,21 @@ def plot_predict(y_test, y_pred, results_dir):
     plt.xlabel('Sample Index')
     plt.ylabel('Traffic Volume')
     plt.legend()
-    #plt.show()
 
     # Save the plot to a file
     plt.savefig(os.path.join(results_dir, 'predicted_vs_actual_traffic_volume.png'))
-    plt.close()  #
-
+    plt.close()
 
 
 def plot_conv_lstm_predict(y_test, y_pred, results_dir):
+    """
+    Plots the first N actual vs predicted values for a ConvLSTM model and saves the plot to a file.
+
+    Parameters:
+    - y_test: Array, actual target values.
+    - y_pred: Array, predicted target values.
+    - results_dir: String, directory path to save the plot image.
+    """
     N = 100  # Number of samples to plot
     plt.figure(figsize=(10, 6))
     plt.plot(y_test[:N], label='Actual', marker='.', linestyle='-', linewidth=1.5)
@@ -52,16 +66,21 @@ def plot_conv_lstm_predict(y_test, y_pred, results_dir):
     plt.xlabel('Sample Index')
     plt.ylabel('Traffic Volume')
     plt.legend()
-    #plt.show()
-    
+
     # Save the plot to a file
     plt.savefig(os.path.join(results_dir, 'predicted_vs_actual_traffic_volume_lstm_conv.png'))
-    plt.close()  #
-
+    plt.close()
 
 
 def plot_conv_lstm_training_history(history, results_dir):
-    # Plot training & validation loss values
+    """
+    Plots the training and validation loss and Mean Absolute Error (MAE) over epochs for a ConvLSTM model
+    and saves the plots to a file.
+
+    Parameters:
+    - history: History object returned by the fit method of a keras Model.
+    - results_dir: String, directory path to save the plot image.
+    """
     plt.figure(figsize=(12, 5))
     plt.subplot(1, 2, 1)
     plt.plot(history.history['loss'], label='Training loss')
@@ -71,8 +90,6 @@ def plot_conv_lstm_training_history(history, results_dir):
     plt.xlabel('Epoch')
     plt.legend()
 
-    # Plot training & validation accuracy values
-    # Only if you have 'mean_absolute_error' in your metrics
     plt.subplot(1, 2, 2)
     plt.plot(history.history['mean_absolute_error'], label='Training MAE')
     plt.plot(history.history['val_mean_absolute_error'], label='Validation MAE')
@@ -82,9 +99,8 @@ def plot_conv_lstm_training_history(history, results_dir):
     plt.legend()
 
     plt.tight_layout()
-    #plt.show()
+
     # Save the plot to a file
     plt.savefig(os.path.join(results_dir, 'training_loss_mean_conv_lstm.png'))
-    plt.close()  #
-
+    plt.close()
 
