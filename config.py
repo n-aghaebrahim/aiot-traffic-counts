@@ -10,11 +10,11 @@ config = {
     "dense_units": 100,
     "dropout_rate": 0.2,
     "learning_rate": 0.001,
-    "epochs": 12,
+    "epochs": 100,
     "batch_size": 32,
     "validation_split": 0.2,
     "verbose": 1,
-    "model_name": "lstm", # lstm or conv_lstm
+    "model_name": "conv_lstm", # lstm or conv_lstm
     "results_dir": "./results",
 }
 

@@ -11,13 +11,15 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras import layers
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.optimizers import Adam
+from contextlib import redirect_stdout
 
 
 
-def create_lstm_model(input_shape):
+
+def create_lstm_model(input_shape, results_dir):
     """
-    Creates and compiles an LSTM model with a Conv1D layer followed by MaxPooling,
-    LSTM, and Dense layers for sequence data processing.
+    Creates and compiles an LSTM model for sequence data processing.
+    This function constructs a model using a single LSTM layer followed by Dense layers.
 
     Parameters:
     - input_shape: Tuple of integers, the shape of the input data (time_steps, features).
@@ -25,18 +27,22 @@ def create_lstm_model(input_shape):
     Returns:
     - Compiled Keras model ready for training.
     """
+
     model = Sequential([
-        layers.Conv1D(filters=64, kernel_size=3, activation='relu', input_shape=input_shape),
-        layers.MaxPooling1D(pool_size=2),
-        layers.LSTM(50, activation='relu'),
+        layers.LSTM(50, activation='relu', input_shape=input_shape),
         layers.Dense(100, activation='relu'),
         layers.Dense(1)
     ])
     model.compile(optimizer=Adam(learning_rate=0.001), loss='mean_squared_error')
+
+    with open(results_dir+'/lstm_model_summary.txt', 'w') as f:
+        with redirect_stdout(f):
+            model.summary()
+
     return model
 
 
-def create_conv_lstm_model(n_steps, n_features, filter_num=64, kernel_size=3, pool_size=2, lstm_units=50, dense_units=100, dropout_rate=0.2, learning_rate=0.001):
+def create_conv_lstm_model(n_steps, n_features, filter_num=64, kernel_size=3, pool_size=2, lstm_units=50, dense_units=100, dropout_rate=0.2, learning_rate=0.001, results_dir="./results"):
     """
     Creates and compiles a Convolutional LSTM model for sequence data processing, integrating
     Conv1D and LSTM layers with Dropout for regularization.
@@ -69,5 +75,10 @@ def create_conv_lstm_model(n_steps, n_features, filter_num=64, kernel_size=3, po
     ])
 
     model.compile(optimizer=Adam(learning_rate=learning_rate), loss='mean_squared_error', metrics=['mean_absolute_error'])
+
+    with open(results_dir+'/conv_lstm_model_summary.txt', 'w') as f:
+        with redirect_stdout(f):
+            model.summary()
+
     return model
 

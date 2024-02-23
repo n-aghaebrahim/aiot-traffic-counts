@@ -25,10 +25,10 @@ def main(datafile):
                                                config["filter_num"], config["kernel_size"],
                                                config["pool_size"], config["lstm_units"],
                                                config["dense_units"], config["dropout_rate"],
-                                               config["learning_rate"])
+                                               config["learning_rate"], config["results_dir"])
     else:
         # Fallback to a default LSTM model if 'conv_lstm' is not specified
-        model_c = model.create_lstm_model((X_train.shape[1], 1))
+        model_c = model.create_lstm_model((X_train.shape[1], 1), config["results_dir"])
 
     # Model training and prediction
     history = train.train_model(model_c, X_train, y_train, epochs=config["epochs"],

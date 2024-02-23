@@ -53,6 +53,62 @@ To run the training process, execute the following command:
 python main.py --datafile /path/to/your/data.csv
 ```
 
+# Model Summary
+
+Here is the summary of the LSTM model used in this project:
+
+## LSTM
+
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ lstm (LSTM)                 (None, 50)                10400     
+                                                                 
+ dense (Dense)               (None, 100)               5100      
+                                                                 
+ dense_1 (Dense)             (None, 1)                 101       
+                                                                 
+=================================================================
+Total params: 15,601
+Trainable params: 15,601
+Non-trainable params: 0
+_________________________________________________________________
+
+
+## CONV + LSTM
+
+Model: "sequential"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ conv1d (Conv1D)             (None, 21, 64)            256       
+                                                                 
+ max_pooling1d (MaxPooling1D  (None, 10, 64)           0         
+ )                                                               
+                                                                 
+ flatten (Flatten)           (None, 640)               0         
+                                                                 
+ reshape (Reshape)           (None, 1, 640)            0         
+                                                                 
+ lstm (LSTM)                 (None, 50)                138200    
+                                                                 
+ dropout (Dropout)           (None, 50)                0         
+                                                                 
+ dense (Dense)               (None, 100)               5100      
+                                                                 
+ dropout_1 (Dropout)         (None, 100)               0         
+                                                                 
+ dense_1 (Dense)             (None, 1)                 101       
+                                                                 
+=================================================================
+Total params: 143,657
+Trainable params: 143,657
+Non-trainable params: 0
+_________________________________________________________________
+
+
+
 ## Output Charts
 
 Generated in the `results/` directory after model execution:
